@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Frame Converter</title>
+    <style>
+        :root {
+            --card: #1c1e24;
+            --input: #0d0e11;
+            --border: #2e323d;
+            --text: #e0e0e0;
+            --muted: #8a8d9b;
+            --accent: #007fff;
+        }
+
+        body.light {
+            --card: #ffffff;
+            --input: #f0f2f5;
+            --border: #d0d4dc;
+            --text: #1c1e24;
+            --muted: #65676b;
+            --accent: #0066cc;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text);
+            font-family: Arial, sans-serif;
+            transition: color 0.2s;
+        }
+
+        .card {
+            width: 330px;
+            padding: 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            margin: 0 0 20px;
+            color: var(--accent);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .row {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .fpsLine {
+            display: flex;
+            gap: 10px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            height: 42px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            outline: none;
+            background: var(--input);
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--accent);
+        }
+
+        select {
+            flex: 1;
+            min-width: 0;
+            padding-right: 32px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e0e0e0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 13px;
+        }
+
+        body.light select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c1e24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+        }
+
+        #customFps {
+            width: 90px;
+            flex-shrink: 0;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            margin: 0;
+            appearance: none;
+        }
+
+        input[type="number"] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+
+        .result {
+            margin-top: 5px;
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .controls {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            display: flex;
+            gap: 8px;
+        }
+
+        button {
+            padding: 8px 14px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        button:hover {
+            border-color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+        <h2 id="title">DaVinci ↔ FL Studio</h2>
+
+        <div class="row">
+            <label id="fpsLabel">FPS (Кадры в секунду):</label>
+
+            <div class="fpsLine">
+                <select id="fps" onchange="fpsChanged()">
+                    <option value="60">60 FPS</option>
+                    <option value="30">30 FPS</option>
+                    <option value="24">24 FPS</option>
+                    <option value="custom" id="customOption">Свой...</option>
+                </select>
+
+                <input id="customFps" type="number" value="60" oninput="calculate()" hidden>
+            </div>
+        </div>
+
+        <div class="row">
+            <label id="framesLabel">Кадры (DaVinci) ➔ CS (FL):</label>
+            <input id="frames" type="number" value="4" oninput="calculate()">
+            <div id="csResult" class="result"></div>
+        </div>
+
+        <div class="row">
+            <label id="csLabel">CS (FL) ➔ Кадры (DaVinci):</label>
+            <input id="cs" type="number" value="4" oninput="calculate()">
+            <div id="framesResult" class="result"></div>
+        </div>
+    </main>
+
+    <div class="controls">
+        <button onclick="toggleLanguage()" id="languageButton">EN</button>
+        <button onclick="toggleTheme()" id="themeButton">🌙 Dark</button>
+    </div>
+
+    <script>
+        // текст для локализации
+        const text = {
+            ru: {
+                fps: "FPS (Кадры в секунду):",
+                frames: "Кадры (DaVinci) ➔ CS (FL):",
+                cs: "CS (FL) ➔ Кадры (DaVinci):",
+                custom: "Свой...",
+                frame: "кадр.",
+                csUnit: "CS"
+            },
+            en: {
+                fps: "FPS (Frames Per Second):",
+                frames: "Frames (DaVinci) ➔ CS (FL):",
+                cs: "CS (FL) ➔ Frames (DaVinci):",
+                custom: "Custom...",
+                frame: "frames",
+                csUnit: "CS"
+            }
+        };
+
+        // сохранение настроек
+        let language = localStorage.getItem("lang") || "ru";
+        let darkTheme = localStorage.getItem("theme") !== "light";
+
+        // применение рандомного градиента
+        function applyRandomGradient() {
+            // получение стиля
+            const styles = getComputedStyle(document.documentElement);
+            // вычисление набора цветов в зависимости от текущей темы
+            const palette = darkTheme 
+                ? [styles.getPropertyValue('--input').trim(), '#121316', '#16181d', '#0a0b0d']
+                : [styles.getPropertyValue('--border').trim(), '#e4e6eb', '#eaedf1', '#d8dbe2'];
+            // цвета градиента
+            // берется один цвет из palette по индексу
+            // индекс составляется из округленного произведения рандомного числа умноженного на длину palette
+            const first = palette[Math.floor(Math.random() * palette.length)];
+            let second = palette[Math.floor(Math.random() * palette.length)];
+            // перерасчет второго цвета если он равен первому
+            while (first === second) {
+                second = palette[Math.floor(Math.random() * palette.length)];
+            }
+            // вычисление рандомного угла
+            const angle = Math.floor(Math.random() * 360);
+            // замещение фона на линейный градиент с рассчитанными цветами и углом
+            document.body.style.background = `linear-gradient(${angle}deg, ${first}, ${second})`;
+        }
+
+        // получение фпс для рассчетов
+        function getFps() {
+            // значение из выпадающего списка с выбором фпс
+            const select = document.getElementById("fps");
+            // если выбрано кастомное значение
+            if (select.value === "custom") {
+                // возвращается число из появившейся строки ввода
+                return parseFloat(document.getElementById("customFps").value) || 1;
+            }
+            // возвращается число из выпадающего списка
+            return parseFloat(select.value);
+        }
+        
+        // изменение значения в выпадающем списке
+        function fpsChanged() {
+            // поле ввода кастомного фпс
+            const customInput = document.getElementById("customFps");
+            // спрятать поле ввода кастомного фпс если элемент выпадающего списка не равен custom
+            customInput.hidden = document.getElementById("fps").value !== "custom";
+            // смещение фокуса на поле ввода кастомного фпс
+            if (!customInput.hidden) {
+                customInput.focus();
+                customInput.select();
+            }
+            // вычисление полей
+            calculate();
+        }
+        
+        // вычисление полей
+        function calculate() {
+            // получение введенных значений
+            // фпс
+            const fps = getFps();
+            // кадры
+            const frames = parseFloat(document.getElementById("frames").value) || 0;
+            // сантисекунды
+            const cs = parseFloat(document.getElementById("cs").value) || 0;
+            // рассчет сантисекунд из кадров в поле
+            // рассчитывается как: округленное произведение кадров и 100, делёное на фпс + подтягивается текст из словаря language с локализациями
+            document.getElementById("csResult").textContent =
+                `${Math.round(frames * 100 / fps)} ${text[language].csUnit}`;
+            // рассчет кадров из сантисекунд в поле
+            // рассчитывается как: округленное с точностью до 1 знака после запятой произведение сантисекунд и фпс, делёное на 100 + подтягивается локализация
+            document.getElementById("framesResult").textContent =
+                `${(cs * fps / 100).toFixed(1)} ${text[language].frame}`;
+        }
+        // применение локализации
+        function applyLanguage() {
+            const current = text[language];
+
+            document.getElementById("fpsLabel").textContent = current.fps;
+            document.getElementById("framesLabel").textContent = current.frames;
+            document.getElementById("csLabel").textContent = current.cs;
+            document.getElementById("customOption").textContent = current.custom;
+            document.getElementById("languageButton").textContent = language === "ru" ? "EN" : "RU";
+            document.getElementById("themeButton").textContent = darkTheme ? "🌙 Dark" : "☀️ Light";
+
+            calculate();
+        }
+        // переключение языка
+        function toggleLanguage() {
+            // если текущий язык равен ru - поставить en, иначе - ru 
+            language = language === "ru" ? "en" : "ru";
+            // запись в хранилище браузера
+            localStorage.setItem("lang", language);
+            // применение локализации
+            applyLanguage();
+        }
+        // переключение темы
+        function toggleTheme() {
+            // инвертирование темы
+            darkTheme = !darkTheme;
+            // запись в хранилище браузера
+            localStorage.setItem("theme", darkTheme ? "dark" : "light");
+            // если darkTheme ложный (тема светлая) — повесить класс light
+            document.body.classList.toggle("light", !darkTheme);
+            // применение локализации
+            applyLanguage();
+            // применение рандомного градиента
+            applyRandomGradient();
+        }
+
+        // если darkTheme ложный (тема светлая) — повесить класс light
+        document.body.classList.toggle("light", !darkTheme);
+        // применение локализации
+        applyLanguage();
+        // применение рандомного градиента
+        applyRandomGradient();
+    </script>
+
+</body>
+</html>
