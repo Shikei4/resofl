@@ -1,12 +1,12 @@
-# ResoFL ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+# ResoFL    ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
-[![Язык: Русский](https://img.shields.io/badge/Язык-Русский-007fff?style=flat-square)](README_RU.md)
+[![Read in Russian](https://img.shields.io/badge/Read_in-Russian-007fff?style=flat-square)](README_RU.md)
 
 An offline, precision micro-utility for synchronizing video editing (frames) and audio production (centiseconds). Converts frames to centiseconds and vice versa. 
 
 No third-party software, everything in one small HTML file.
 
-[**Try it**](https://shikei4.github.io/resofl/)
+[**👉 Try it**](https://shikei4.github.io/resofl/)
 
 ## ⚡️ Why does this exist?
 
@@ -24,7 +24,7 @@ Besides programming, I also do video editing and music creation. For my project 
 ## 🛠 How to run
 
 ### Visit the website
-1. Here is the site - https://shikei4.github.io/resofl/.
+1. Here is the site - https://shikei4.github.io/resofl/
 
 ### Run locally
 1. Download the `index.html` file.
