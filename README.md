@@ -1,12 +1,17 @@
-# ResoFL    ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+<div align="center">
+
+# ResoFL
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) &nbsp; ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) &nbsp; ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
 [![Read in Russian](https://img.shields.io/badge/Read_in-Russian-007fff?style=flat-square)](README_RU.md)
 
-An offline, precision micro-utility for synchronizing video editing (frames) and audio production (centiseconds). Converts frames to centiseconds and vice versa. 
+**A standalone, precision micro-utility for synchronizing video editing (frames) and audio production (centiseconds).**  
+*No third-party software — everything in one small, fully autonomous HTML file.*
 
-No third-party software, everything in one small HTML file.
+[**👉 Try it online**](https://shikei4.github.io/resofl/)
 
-[**👉 Try it**](https://shikei4.github.io/resofl/)
+</div>
 
 ## ⚡️ Why does this exist?
 
