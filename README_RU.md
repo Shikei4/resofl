@@ -1,14 +1,17 @@
-# ResoFL ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+<div align="center">
 
+# ResoFL
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) &nbsp; ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) &nbsp; ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
-[![Language:Russian](https://img.shields.io/badge/Language-English-007fff?style=flat-square)](README_RU.md)
+[![Читать на Английском](https://img.shields.io/badge/Читать_на-Английском-007fff?style=flat-square)](README_RU.md)
 
-Это автономная и прецизионная микро-утилита для синхронизации видеомонтажа (кадры) и аудио (сантисекунды). Конвертирует кадры в сантисекунды и обратно. 
+**Высокоточная микро-утилита для синхронизации видео (кадров) и звука (сантисекунд).**  
+*Никакого стороннего программного обеспечения - все в одном небольшом, полностью автономном HTML—файле.*
 
-Никакого стороннего софта, все в одном маленьком HTML файле.
+[**👉 Попробовать**](https://shikei4.github.io/resofl/)
 
-[**Попробовать**](https://shikei4.github.io/resofl/)
+</div>
 
 ## ⚡️ Почему это существует?
 
