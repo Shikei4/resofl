@@ -200,7 +200,9 @@
                 cs: "CS (FL) ➔ Кадры (DaVinci):",
                 custom: "Свой...",
                 frame: "кадр.",
-                csUnit: "CS"
+                csUnit: "CS",
+                themeDark: "🌙 Тёмная",
+                themeLight: "☀️ Светлая"
             },
             en: {
                 fps: "FPS (Frames Per Second):",
@@ -208,7 +210,9 @@
                 cs: "CS (FL) ➔ Frames (DaVinci):",
                 custom: "Custom...",
                 frame: "frames",
-                csUnit: "CS"
+                csUnit: "CS",
+                themeDark: "🌙 Dark",
+                themeLight: "☀️ Light"
             }
         };
 
@@ -294,7 +298,8 @@
             document.getElementById("csLabel").textContent = current.cs;
             document.getElementById("customOption").textContent = current.custom;
             document.getElementById("languageButton").textContent = language === "ru" ? "EN" : "RU";
-            document.getElementById("themeButton").textContent = darkTheme ? "🌙 Dark" : "☀️ Light";
+            document.getElementById("themeButton").textContent = darkTheme ? current.themeDark : current.themeLight;
+
 
             calculate();
         }
